@@ -1,17 +1,12 @@
 
 import dash
-from dash import Dash, dcc, html, Output, Input, callback
 import dash_daq as daq
 import dash_bootstrap_components as dbc
+from dash import dcc, html
 from app import data
-departments = [
-    'All',
-    'Drawings & Prints',
-    'Photography',
-    'Painting & Sculpture',
-    'Media and Performance',
-    'Architecture & Design'
-]
+
+departments = list(data['department'].unique())
+departments.append("All")
 
 dash.register_page(__name__, path="/")
 
@@ -44,6 +39,7 @@ layout = \
                 html.H2("Finished Between Years:")
             ], style={"width": "30%", "display": "inline-block"}),
 
+            # Year inputs
             html.Div([
                 daq.NumericInput(
                     id="year-start",
@@ -69,7 +65,7 @@ layout = \
             html.Div([
                 html.P(id='error-warning', style={"color": "red"})
             ], style={"display": "inline-block", "width": "33%"}),
-            
+
         ], style={"padding-top": "3px"}),
 
         html.Hr(),
