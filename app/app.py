@@ -5,12 +5,12 @@ import psycopg2
 import psycopg2.extras
 import warnings
 import plotly.express as px
+from dotenv import load_dotenv
 from dash import html, dcc, Dash,  Output, Input
 from utils import get_db_connection, get_artists_gender_demographics, \
     get_artists_nationality_demographics, get_the_number_of_artworks, \
     drop_untitled_artwork, filter_by_department, filter_completed_work_by_date_range \
    
-
 warnings.filterwarnings('ignore')
 
 # Create database connection, get get data
@@ -25,7 +25,7 @@ warnings.filterwarnings('ignore')
 def create_gender_graph(data: pd.DataFrame) -> px.bar:
     """Creates a graph for the gender aggregates for data"""
     plot_data = {"gender": list(data['gender']), "count":list(data['count'])}
-    fig = px.bar(plot_data, title="The Gender Distribution",
+    fig = px.bar(plot_data, title="Artists Gender Distribution",
                  x="gender", y="count", color = "gender", 
                  labels ={
                     "gender":"Gender",
@@ -37,13 +37,12 @@ def create_gender_graph(data: pd.DataFrame) -> px.bar:
         ),
         title_x=0.5
     )
-    
     return fig
 
 def create_nationality_graph(data: pd.DataFrame) -> px.bar:
     """Creates a graph for nationalities count for given data set"""
     plot_data = {"nationality": list(data['nationality']), "count":list(data['count'])}
-    fig = px.bar(plot_data, title="The Nationality Distribution",
+    fig = px.bar(plot_data, title="Artists Nationality Distribution",
                  x="nationality", y="count", color = "nationality", 
                  labels ={
                     "nationality":"Nationality",
@@ -60,6 +59,9 @@ def create_nationality_graph(data: pd.DataFrame) -> px.bar:
 
 
 data = pd.read_csv('./art_data.csv')
+
+#removes duplicates
+data = data[data.duplicated() == False ]
 
 app = Dash(__name__, external_stylesheets=[
            dbc.themes.ZEPHYR], use_pages=True)
@@ -114,7 +116,6 @@ def output_data(department: str, start_year: int, end_year: int):
     nationality_fig = create_nationality_graph(artist_nationality_demographics)
 
     return num_artworks_string , gender_fig, nationality_fig, description_string, error_warning
-
 
 
 if __name__ == "__main__":

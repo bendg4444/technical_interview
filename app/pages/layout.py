@@ -15,21 +15,18 @@ departments = [
 
 dash.register_page(__name__, path="/")
 
-
 layout = \
     html.Div([
         # Header Bar
         html.Div([
-
             html.H1(children="Museum of Modern Art: Data Analysis")
-
         ]),
 
         html.Hr(),
 
         # Input values
         html.Div([
-
+    
             html.Div([
                 html.H2("Department:")
             ], style={"width": "30%", "display": "inline-block"}),
@@ -38,6 +35,7 @@ layout = \
                 dcc.Dropdown(departments, value="All",
                              id="department-dropdown")
             ], style={"display": "inline-block", "width": "46%"}),
+
         ]),
 
         html.Div([
@@ -58,6 +56,7 @@ layout = \
             ], style={"display": "inline-block", "width": "25%"}),
 
             html.Div([
+    
                 daq.NumericInput(
                     id="year-end",
                     min=data['year_completed'].min(),
@@ -70,6 +69,7 @@ layout = \
             html.Div([
                 html.P(id='error-warning', style={"color": "red"})
             ], style={"display": "inline-block", "width": "33%"}),
+            
         ], style={"padding-top": "3px"}),
 
         html.Hr(),

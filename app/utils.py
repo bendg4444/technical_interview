@@ -1,14 +1,17 @@
 import pandas as pd
 import psycopg2
 import psycopg2.extras
+import os 
+from dotenv import load_dotenv
 
+load_dotenv(override=True, verbose=True)
 
 def get_db_connection() -> psycopg2.extensions.connection:
     """Create a connection for database postgres"""
-    DB_USER = 'vxygirtn'
-    DB_PASSWORD = 'RguWG24fx16sgqY-h2YwD1zMdegyjWkf'
-    DB_HOST = 'trumpet.db.elephantsql.com'
-    DB_NAME = 'vxygirtn'
+    DB_USER=os.getenv("DB_USER")
+    DB_PASSWORD=os.getenv("DB_PASSWORD")
+    DB_HOST=os.getenv("DB_HOST")
+    DB_NAME=os.getenv("DB_NAME")
 
     try:
         conn = psycopg2.connect(f"""
