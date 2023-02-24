@@ -83,7 +83,7 @@ app.layout = html.Div(dash.page_container)
 
     ]
 )
-def output_data(department: str, start_year: int, end_year: int):
+def output_data(department: str, start_year: int, end_year: int) :
     """Function to take in the inputs from the user and update the dashboard"""
     
     processed_data = drop_untitled_artwork(data)

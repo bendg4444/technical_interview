@@ -1,0 +1,10 @@
+pandas
+psycopg2
+dash
+plotly
+dash_bootstrap_components
+dash_daq
+warnings
+numpy
+os
+python-dotenv
